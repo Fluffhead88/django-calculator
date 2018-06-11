@@ -10,9 +10,18 @@ class CalculatorListCreateAPIView(generics.ListCreateAPIView):
     serializer_class = CalculatorSerializer
 
     def perform_create(self, serializer):
-        serializer.result = serializer.operand_one, serializer.operator, serializer.operand_two
-        serializer.save(owner=self.request.user)
-        return Response(result)
+        result = serializer.validated_data
+        x = 0
+        if result['operator'] == "+":
+            x = (result['operand_one'] + result['operand_two'])
+        elif result['operator'] == "-":
+            x = (result['operand_one'] - result['operand_two'])
+        elif result['operator'] == "*":
+            x = (result['operand_one'] * result['operand_two'])
+        elif result['operator'] == "/":
+            x = (result['operand_one'] / result['operand_two'])
+        serializer.save(owner=self.request.user, result=x)
+
 
 
 class CalculatorRetrieveDestroyAPIView(generics.RetrieveDestroyAPIView):

@@ -5,6 +5,6 @@ from app.models import Calculator
 class CalculatorSerializer(ModelSerializer):
 
     class Meta:
-        fields = ["id", 'operand_one', 'operand_two', 'operator', 'result', 'created' "owner"]
-        read_only_fields = ["owner"]
+        fields = ["id", 'operand_one', 'operand_two', 'operator', 'result', "created", "owner"]
+        read_only_fields = ["owner", "result"]
         model = Calculator

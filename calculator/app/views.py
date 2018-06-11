@@ -6,8 +6,13 @@ from app.serializers import CalculatorSerializer
 from app.permissions import IsOwnerOrReadOnly
 
 class CalculatorListCreateAPIView(generics.ListCreateAPIView):
-    queryset = Calculator.objects.all()
+    #queryset = Calculator.objects.all()
     serializer_class = CalculatorSerializer
+
+    def get_queryset(self):
+        user = self.request.user
+        return Calculator.objects.filter(calculator=user)
+
 
     def perform_create(self, serializer):
         result = serializer.validated_data
